@@ -1,5 +1,5 @@
-GivenName: John #use first name from form
-Surname: Doe #use last name from form
+GivenName: jOhn #use first name from form
+Surname: doE #use last name from form
 department: Testing Department #will populate department field in AD
 jobTitle: TestUser #use job title from form
 manager: #use manager SAM name from AD
