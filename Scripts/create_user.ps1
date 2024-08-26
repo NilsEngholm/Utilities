@@ -31,7 +31,7 @@ try {
 
 #in this section we create the user values and splat them for entry to the new-aduser cmdlet
 $userParams = @{
-    Name = $yaml.Name
+    Name = $yaml.GivenName + " " + $yaml.Surname
     GivenName = $yaml.GivenName
     Surname = $yaml.Surname
     DisplayName = $yaml.givenName + " " + $yaml.Surname
@@ -44,7 +44,7 @@ $userParams = @{
     Title = $yaml.jobTitle #real job title section
     Company = $yaml.company
     Manager = $yaml.manager
-    Path = $yaml.Path #OU path | leaving as default now but will add OU assignment later 
+    #Path = $yaml.Path #OU path | leaving as default now but will add OU assignment later 
     Enabled = $false
 }
 
