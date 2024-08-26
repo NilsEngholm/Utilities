@@ -1,0 +1,13 @@
+GivenName: John #use first name from form
+Surname: Doe #use last name from form
+department: Testing Department #will populate department field in AD
+jobTitle: TestUser #use job title from form
+manager: #use manager SAM name from AD
+phone: 123-456-7890 #use mobile phone number from form
+city: City #use location from form
+copiedUser:  #user permissions who will be copied | use SAM name from AD
+
+
+company: Company Inc. #company name
+passwordoesnotexpire: $true #will the password expire 
+changePasswordAtLogon: $false #will the user be prompted to change password at logon | recomend setting to false
