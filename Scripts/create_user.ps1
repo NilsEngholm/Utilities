@@ -29,7 +29,7 @@ Read-Host "Current AD domain: @$domain | Press enter to continue"
 #Write-Host "Reading form file from $path..."
 
 
-$path = 'C:\Users\Administrator\AD_Scripts\Scripts\john_doe.yaml'
+$path = 'Scripts\userParamsTemplate.yaml'
 Write-Host "Reading form file from $path..."
 
 try {
@@ -99,10 +99,7 @@ function Get-ADUserForm {
         return $form.Tag
 }
 
-
 $yaml
-
-$userParams = @{}
 
 #in this section we create the user values and splat them for entry to the new-aduser cmdlet | I've used the textinfo class to make the names title case but it's not necessary
 #this does not inculde the password, UPN, and group assignments | we will set that later
@@ -123,7 +120,7 @@ $userParams = @{
     Enabled = $false #this is set to false by default, the user will be enabled later
 }
 
-$userParams.email
+
 #add the UPN to the userParams | in this case we're using the email address as the UPN | this can be changed to a different format as needed
 $userParams.UserPrincipalName = $userParams.EmailAddress
 $userParams.UserPrincipalName

@@ -1,11 +1,11 @@
-GivenName: jOhn #use first name from form
-Surname: doE #use last name from form
+GivenName: Test #use first name from form
+Surname: User #use last name from form
 department: Testing Department #will populate department field in AD
 jobTitle: TestUser #use job title from form
 manager: #use manager SAM name from AD
 phone: 123-456-7890 #use mobile phone number from form
 city: City #use location from form
-copiedUser:  #user permissions who will be copied | use SAM name from AD
+copiedUser: #user permissions who will be copied | use SAM name from AD
 
 ####Don't have to change these####
 company: Company Inc. #company name
