@@ -7,7 +7,7 @@ phone: 123-456-7890 #use mobile phone number from form
 city: City #use location from form
 copiedUser:  #user permissions who will be copied | use SAM name from AD
 
-
+####Don't have to change these####
 company: Company Inc. #company name
 passwordoesnotexpire: $true #will the password expire 
 changePasswordAtLogon: $false #will the user be prompted to change password at logon | recomend setting to false

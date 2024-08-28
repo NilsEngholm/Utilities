@@ -24,12 +24,12 @@ Read-Host "Current AD domain: @$domain | Press enter to continue"
 #in this section we import user data | I've used a YAML file for this example, but will make a form later
 #this option allows the user to just type in the name of the file they want to use
 
-$name = Read-Host "Enter the name of the file to use"
-$path = "C:\Users\Administrator\Documents\MACD YML\$name.yml"
-Write-Host "Reading form file from $path..."
+#$name = Read-Host "Enter the name of the file to use"
+#$path = "C:\Users\Administrator\Documents\MACD YML\$name.yaml"
+#Write-Host "Reading form file from $path..."
 
 
-#$path = 'Scripts\john_doe.yaml'
+$path = 'C:\Users\Administrator\AD_Scripts\Scripts\john_doe.yaml'
 Write-Host "Reading form file from $path..."
 
 try {
@@ -99,7 +99,10 @@ function Get-ADUserForm {
         return $form.Tag
 }
 
-$yaml = Get-ADUserForm
+
+$yaml
+
+$userParams = @{}
 
 #in this section we create the user values and splat them for entry to the new-aduser cmdlet | I've used the textinfo class to make the names title case but it's not necessary
 #this does not inculde the password, UPN, and group assignments | we will set that later
@@ -120,9 +123,10 @@ $userParams = @{
     Enabled = $false #this is set to false by default, the user will be enabled later
 }
 
+$userParams.email
 #add the UPN to the userParams | in this case we're using the email address as the UPN | this can be changed to a different format as needed
 $userParams.UserPrincipalName = $userParams.EmailAddress
-
+$userParams.UserPrincipalName
 #perform duplicate check using samaccountname
 Write-Host "Checking if user $($userParams.SamAccountName) already exists..."
 try {
