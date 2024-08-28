@@ -24,13 +24,13 @@ Read-Host "Current AD domain: @$domain | Press enter to continue"
 #in this section we import user data | I've used a YAML file for this example, but will make a form later
 #this option allows the user to just type in the name of the file they want to use
 
-#$name = Read-Host "Enter the name of the file to use"
-#$path = "C:\Users\Administrator\Documents\MACD YML\$name.yaml"
-#Write-Host "Reading form file from $path..."
-
-
-$path = 'Scripts\userParamsTemplate.yaml'
+$name = Read-Host "Enter the name of the file to use"
+$path = "C:\Users\Administrator\AD_Scripts\Scripts\YAML files\$name.yaml"
 Write-Host "Reading form file from $path..."
+
+
+#$path = 'C:\Users\Administrator\AD_Scripts\Scripts\user - copy.yaml'
+#Write-Host "Reading form file from $path..."
 
 try {
     $yaml = ConvertFrom-Yaml (Get-Content -Raw -Path $path)
@@ -112,6 +112,7 @@ $userParams = @{
     EmailAddress = (($yaml.GivenName[0] + $yaml.Surname) + "@$domain").ToLower()
     Description = $textinfo.ToTitleCase($yaml.jobTitle) #in this example we'll display the job title of the user in their description field
     Office = $textinfo.ToTitleCase($yaml.city) #in this example we'll display the location of the user in their office field
+    OfficePhone = $yaml.phone
     Department = $textinfo.ToTitleCase($yaml.Department) 
     Title = $textinfo.ToTitleCase($yaml.jobTitle) #real job title section
     Company = $textinfo.ToTitleCase($yaml.company)
@@ -149,3 +150,28 @@ try {
 }
 
 Write-Host "User $($userParams.SamAccountName) created successfully."
+
+#copy group membership from another user
+$newUser = Get-ADUser -Identity $userParams.SamAccountName
+$sourceUser = $yaml.copiedUser
+if ($sourceUser) {
+    $sourceUserMemberOf = Get-ADUser -Identity $sourceUser -Properties MemberOf | Select-Object -ExpandProperty MemberOf
+    foreach ($group in $sourceUserMemberOf) {
+        Read-Host "Adding user to $group..."
+        Add-ADGroupMember -Identity $group -Members $newUser
+        Write-Host "User $($userParams.SamAccountName) added successfully to $group."
+    }
+} else {
+    Write-Warning "Source user not found. Group membership not copied, check spelling?"
+}
+
+#add proxy address
+Read-Host "Press Enter to continue with proxy address addition"
+#add proxy address
+try {
+    $proxyAddress = "SMTP:$($userParams.UserPrincipalName)"
+    Set-ADUser $newUser -Add @{proxyAddresses = $proxyAddress}
+    Write-Host "Proxy address $proxyAddress added successfully to $($userParams.SamAccountName)."
+} catch {
+    Write-Error "Failed to add the proxy address. Please check the user details and your permissions."
+}

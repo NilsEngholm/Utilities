@@ -1,10 +1,10 @@
-GivenName: Test #use first name from form
-Surname: User #use last name from form
-department: Testing Department #will populate department field in AD
-jobTitle: TestUser #use job title from form
-manager: jdoe #use manager SAM name from AD
+GivenName: Amna #use first name from form
+Surname: Khan #use last name from form
+department: BES #will populate department field in AD
+jobTitle: Boss #use job title from form
+manager: tuser #use manager SAM name from AD
 phone: 123-456-7890 #use mobile phone number from form
-city: City #use location from form
+city: Calgary #use location from form
 copiedUser: jdoe #user permissions who will be copied | use SAM name from AD
 
 ####Don't have to change these####
