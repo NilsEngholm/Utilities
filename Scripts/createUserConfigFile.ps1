@@ -18,7 +18,7 @@ function Get-ADUserForm {
     $tabPage1.Text = "Basic Information"
 
     $tabPage2 = New-Object System.Windows.Forms.TabPage
-    $tabPage2.Text = "Additional Information"
+    $tabPage2.Text = "Copy User/Manager Info"
 
     # add pages using TabPages.Add method
     $tabControl.TabPages.Add($tabPage1)
