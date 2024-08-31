@@ -1,3 +1,4 @@
+set-executionpolicy remotesigned -Scope CurrentUser
 #import AD module
 $requiredModules = @('ActiveDirectory', 'powershell-yaml', 'get-culture')
 
@@ -25,81 +26,15 @@ Read-Host "Current AD domain: @$domain | Press enter to continue"
 #this option allows the user to just type in the name of the file they want to use
 
 $name = Read-Host "Enter the name of the file to use"
-$path = "C:\Users\Administrator\AD_Scripts\Scripts\YAML files\$name.yaml"
-Write-Host "Reading form file from $path..."
-
-
-#$path = 'C:\Users\Administrator\AD_Scripts\Scripts\user - copy.yaml'
-#Write-Host "Reading form file from $path..."
+$path = "Scripts\\Config Templates\\$name.yaml"
+Write-Host "Reading form file from $path"
 
 try {
     $yaml = ConvertFrom-Yaml (Get-Content -Raw -Path $path)
 } catch {
-    Write-Error "Failed to read the YAML file. Please check the file path and format."
+    Write-Error "Failed to read the config file. Please check the file path and format."
     return
 }
-
-#here we create the form to input user data
-function Get-ADUserForm {
-    Add-Type -AssemblyName System.Windows.Forms
-    Add-Type -AssemblyName System.Drawing
-
-    # The object
-    $form = New-Object System.Windows.Forms.Form
-    $form.Text = "Active Directory User Information"
-    $form.Size = New-Object System.Drawing.Size(400, 400)
-
-    # Submit button
-    $submitButton = New-Object System.Windows.Forms.Button
-    $submitButton.Text = "Submit"
-    $submitButton.Location = New-Object System.Drawing.Point(260, 310)
-    $submitButton.Size = New-Object System.Drawing.Size(100, 30)
-    $form.Controls.Add($submitButton)
-
-    # Form labels and text boxes
-    $labels = @("First Name:", "Last Name:", "Phone:", "Location:", "Job Title:", "Manager:", "Division:")
-    $textBoxes = @()
-    $yPos = 45
-
-    foreach ($labelText in $labels) {
-        $label = New-Object System.Windows.Forms.Label
-        $label.Text = $labelText
-        $label.Location = New-Object System.Drawing.Point(10, $yPos)
-        $form.Controls.Add($label)
-
-        $textBox = New-Object System.Windows.Forms.TextBox
-        $textBox.Location = New-Object System.Drawing.Point(120, $yPos)
-        $textBox.Size = New-Object System.Drawing.Size(225, 20)
-        $form.Controls.Add($textBox)
-        $textBoxes += $textBox
-
-        $yPos += 40
-    }
-
-        # Add functionality to the submit button
-        $submitButton.Add_Click({
-            # Create a hash table using the form data
-            $values = @(
-                $textBoxes[0].Text,
-                $textBoxes[1].Text,
-                $textBoxes[2].Text,
-                $textBoxes[3].Text,
-                $textBoxes[4].Text,
-                $textBoxes[5].Text,
-                $textBoxes[6].Text
-            )
-            $form.Tag = $values
-            $form.Close()
-        })
-
-        # Initiate the form
-        $form.ShowDialog()
-        
-        # Return form data as a list
-        return $form.Tag
-}
-
-$yaml
 
 #in this section we create the user values and splat them for entry to the new-aduser cmdlet | I've used the textinfo class to make the names title case but it's not necessary
 #this does not inculde the password, UPN, and group assignments | we will set that later
@@ -121,6 +56,7 @@ $userParams = @{
     Enabled = $false #this is set to false by default, the user will be enabled later
 }
 
+$userParams
 
 #add the UPN to the userParams | in this case we're using the email address as the UPN | this can be changed to a different format as needed
 $userParams.UserPrincipalName = $userParams.EmailAddress
