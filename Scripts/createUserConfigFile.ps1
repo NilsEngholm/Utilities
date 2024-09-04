@@ -108,5 +108,5 @@ function Get-ADUserForm {
 $formData = Get-ADUserForm
 if ($null -ne $formData) {
     $filename = ($formData.GivenName + $formData.Surname).ToLower()
-    $formData | ConvertTo-Yaml | Out-File -FilePath "Scripts\Config Templates\$filename.yaml"
+    $formData | ConvertTo-Yaml | Out-File -FilePath "$filename.yaml"
 }

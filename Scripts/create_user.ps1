@@ -1,4 +1,4 @@
-set-executionpolicy remotesigned -Scope CurrentUser
+#set-executionpolicy remotesigned -Scope CurrentUser
 #import AD module
 $requiredModules = @('ActiveDirectory', 'powershell-yaml', 'get-culture')
 
