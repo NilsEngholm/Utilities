@@ -1,0 +1,22 @@
+{
+    "Name": "John Doe",
+    "GivenName": "John",
+    "Surname": "Doe",
+    "SamAccountName": "jdoe",
+    "UserPrincipalName": "jdoe@example.com",
+    "DisplayName": "John Doe",
+    "Path": "OU=Users,DC=example,DC=com",
+    "Enabled": true,
+    "AccountPassword": {
+      "Password": "P@ssw0rd"
+    },
+    "PasswordNeverExpires": false,
+    "ChangePasswordAtLogon": true,
+    "Description": "IT department user",
+    "EmailAddress": "jdoe@example.com",
+    "Office": "Headquarters",
+    "Phone": "123-456-7890",
+    "Title": "IT Specialist",
+    "Department": "Information Technology",
+    "Manager": "CN=Jane Smith,OU=Users,DC=example,DC=com"
+  }  
