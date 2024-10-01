@@ -52,7 +52,7 @@ $userParams = @{
     Title = $textinfo.ToTitleCase($yaml.jobTitle) #real job title section
     Company = $textinfo.ToTitleCase($yaml.company)
     Manager = $yaml.manager #not title cased as this will use the samaccountname of the manager
-    Path = "OU=Test,OU=Test OU,DC=$domainPrefix,DC=$topLevelDomain"
+    Path = "OU=SBS Users,OU=,DC=$domainPrefix,DC=$topLevelDomain"
     Enabled = $false #this is set to false by default, the user will be enabled later
 }
 

@@ -41,7 +41,9 @@ $currentDate = (Get-Date)
 $finalTerminationDate = ($currentDate.AddDays(90)).ToString("MMMM dd, yyyy")
 try {
     Set-ADUser -Identity $terminatedUser -Description "$finalTerminationDate - Delete"
+    Set-ADObject -Identity $user.DistinguishedName -Remove @{Proxyaddresses="$($user.smtp)"}
     Set-ADAccountPassword -Identity $terminatedUser -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "Bonnetts1398!" -Force)
+
     Read-Host "User $terminatedUser attributes changed successfully, press Enter to remove group membership"
 } catch {
     Write-Error "Failed to change user $terminatedUser attributes. Please check the user name and try again."
